@@ -13,3 +13,17 @@
 publisher -> processor -> subscribe
 subscrive -> subscription -> publisher
 ```
+#### Subscribe
+- É composto por:
+  - onNext -> próximo evento recebido
+  - onComplete -> emitido quando acaba-se os eventos
+  - onError -> quando ocorre algum problema ao consumir o evento
+
+#### Subscription
+- Composta por:
+  - request -> pega pedi o próximo evento
+  - cancel -> cancela  inscrição e não recebe mais nenhum envento.
+
+#### Publisher
+- Hot -> emitie eventos, sem ninguem se inscrever
+- cold -> emite eventos, quando um subscriber se inscrever.
