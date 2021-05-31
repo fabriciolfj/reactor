@@ -27,3 +27,15 @@ subscrive -> subscription -> publisher
 #### Publisher
 - Hot -> emitie eventos, sem ninguem se inscrever
 - cold -> emite eventos, quando um subscriber se inscrever.
+
+### Mono
+- Emite um único evento
+- Formas de emissão:
+  - Mono.fromSupplier -> usa um fornecedor para emitir um evento
+  - Mono.fromCallable -> usa um fornecedor para emitir um evento ou lança uma exceção caso não consiga.
+   
+#### Mono async
+- Uma forma de se subscrever em um evento, utiliza-se:
+```
+subscribeOn(Schedulers.boundedElastic()).subscribe()
+```
