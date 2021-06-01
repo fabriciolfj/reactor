@@ -39,3 +39,9 @@ subscrive -> subscription -> publisher
 ```
 subscribeOn(Schedulers.boundedElastic()).subscribe()
 ```
+
+### Flux
+- Emite um ou mais eventos.
+- Formas de emissão:
+  - Flux.fromStream(passa um stream)
+  - Flux.range(inicio, quantidade)
