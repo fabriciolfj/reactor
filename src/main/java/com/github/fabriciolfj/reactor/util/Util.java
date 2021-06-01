@@ -1,6 +1,7 @@
 package com.github.fabriciolfj.reactor.util;
 
 import com.github.javafaker.Faker;
+import org.reactivestreams.Subscriber;
 
 import java.util.function.Consumer;
 
@@ -31,5 +32,13 @@ public class Util {
 
     public static Faker faker() {
         return FAKER;
+    }
+
+    public static Subscriber<Object> subscriber() {
+        return new DefaultSubscriber();
+    }
+
+    public static Subscriber<Object> subscriber(final String name) {
+        return new DefaultSubscriber(name);
     }
 }

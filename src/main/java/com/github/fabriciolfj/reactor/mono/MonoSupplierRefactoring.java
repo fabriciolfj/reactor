@@ -8,10 +8,10 @@ public class MonoSupplierRefactoring {
 
     public static void main(String[] args) {
         getName();
-        final String name = getName().subscribeOn(Schedulers.boundedElastic())
-                //.subscribe(Util.onNext());
-                .block();
-        System.out.println(name);
+        getName().subscribeOn(Schedulers.boundedElastic())
+                .subscribe(Util.onNext());
+                //.block();
+        //System.out.println(name);
         getName();
 
         Util.sleepSeconds(4);
