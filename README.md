@@ -46,3 +46,6 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
   - Flux.fromStream(passa um stream)
   - Flux.range(inicio, quantidade)
   - Flux.fromIterable(List.of(1,1,2))
+  - Flux.create -> personalizao a forma de emitir, dar error e completar o fluxo.
+  - Flux.generate -> similar ao create, mas posso apenas emitir um evento por vez
+  - Flux.puhs -> não é thread safe.
