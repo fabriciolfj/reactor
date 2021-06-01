@@ -13,6 +13,6 @@ public class FluxInterval {
                 .log()
                 .subscribe(Util.onNext());
 
-        //Util.sleepSeconds(4);
+        Util.sleepSeconds(4);
     }
 }
