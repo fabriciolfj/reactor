@@ -97,4 +97,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
                 .doFirst(() -> System.out.println("doFirst 2")) //primeiro evento, nao importa o local
                 .subscribe(Util.subscriber());
     }
-```    
+```  
+
+##### limitRate
+- Se limita a requisitar na inscrição uma quantidade de eventos, diferente do take, a inscrição não é cancelada.
