@@ -116,7 +116,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 
 ##### onError
 - Mecanismo para deixar a pipeline reativa mais resiliente.
-- Exemplos: onErrorReturn, onErrorMap e etc.
+- Exemplos: onErrorReturn, onErrorMap, onErrorResume e etc.
 ```
     public static void main(String[] args) {
         Flux.range(1, 10)
