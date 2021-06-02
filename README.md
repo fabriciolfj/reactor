@@ -100,4 +100,13 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 ```  
 
 ##### limitRate
-- Se limita a requisitar na inscrição uma quantidade de eventos, diferente do take, a inscrição não é cancelada.
+- Restringe uma quantidade de eventos, no request dá subscripiton
+- Diferente do take, a inscrição não é cancelada.
+```
+    public static void main(String[] args) {
+        Flux.range(1,1000)
+                .log()
+                .limitRate(100)
+                .subscribe(Util.subscriber());
+    }
+```
