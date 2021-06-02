@@ -56,3 +56,19 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 #### Flux - formas de combinação
 - mergeWith -> agrupa 2 flux em 1
 - zip -> combinado 2 flux em 1, e neste com dados mesclados ou em tuples
+
+### Operadores
+##### handle
+- permite manipular o evento, de forma sincrona. Exemplo:
+```
+    public static void main(String[] args) {
+        Flux.range(1,10)
+                .handle((integer, sync) -> {
+                    if(integer == 7) {
+                        sync.complete();
+                    } else {
+                        sync.next(integer);
+                    }
+        }).subscribe(Util.subscriber());
+    }
+```
