@@ -5,7 +5,7 @@
 - Programação reativa possui como pilar, os seguintes atores:
   - Publisher: dono dos dados, que produz as informações
   - Processor: que envia para os assinantes os dados
-  - Subscriber: quem assina o publicador
+  - Subscriber: quem assina o publicador, que solicita os dados através da inscrição (subscription). Nesse ponto que podemos utilizar o backpressure.
   - Subscription: assinatura, responsável em solicitar o processo dado ou cancelar ao publicador.
 
 - Fluxo:
