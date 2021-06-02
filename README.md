@@ -111,3 +111,5 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
                 .subscribe(Util.subscriber());
     }
 ```
+##### delayElements
+- atrasar, por um tempo configurado, o tempo de produção dos eventos.
