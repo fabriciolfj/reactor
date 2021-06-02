@@ -113,3 +113,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 ```
 ##### delayElements
 - atrasar, por um tempo configurado, o tempo de produção dos eventos.
+
+##### onError
+- Mecanismo para deixar a pipeline reativa mais resiliente.
+- Exemplos: onErrorReturn, onErrorMap e etc.
