@@ -72,3 +72,28 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
         }).subscribe(Util.subscriber());
     }
 ```
+##### do (callback)
+- retorno da chamada em momentos diferentes como: cada evento, após completar o flux, após o erro e etc.
+- Exemplo:
+
+```
+    public static void main(String[] args) {
+        Flux.create(fluxSink -> {
+            System.out.println("created");
+            for(int i =0; i < 5; i++) {
+                fluxSink.next(i);
+            }
+            fluxSink.complete();
+            System.out.println("complete");
+        }).doOnComplete(() -> System.out.println("doOnComplete")) //chama no fim do fluxo
+                .doFirst(() -> System.out.println("doFirst"))
+                .doOnNext(o -> System.out.println("doOnNext: " + o))
+                .doOnSubscribe(s -> System.out.println("doOnSubscribe " + s))
+                .doOnError(err -> System.out.println("doOnError: " + err.getMessage()))
+                .doOnTerminate(() -> System.out.println("doOnTerminate")) // chama apos o fim do complete
+                .doOnCancel(() -> System.out.println("doOnCancel"))
+                .doFinally(signalType -> System.out.println("doFinally: " + signalType)) // chama apos o terminate
+                .doOnDiscard(Object.class, o -> System.out.println("doOndiscard: " + o))
+                .subscribe(Util.subscriber());
+    }
+```    
