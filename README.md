@@ -102,11 +102,12 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 ##### limitRate
 - Restringe uma quantidade de eventos, no request dá subscripiton
 - Diferente do take, a inscrição não é cancelada.
+- Podemos também controlar o volume de requisição, no exemplo abaixo o primeiro request será de 100 e depois será em 99, até que os eventos termine.
 ```
     public static void main(String[] args) {
         Flux.range(1,1000)
                 .log()
-                .limitRate(100)
+                .limitRate(100, 99)
                 .subscribe(Util.subscriber());
     }
 ```
