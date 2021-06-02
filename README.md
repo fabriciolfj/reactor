@@ -42,10 +42,17 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 
 ### Flux
 - Emite um ou mais eventos.
-- Formas de emissão:
-  - Flux.fromStream(passa um stream)
-  - Flux.range(inicio, quantidade)
-  - Flux.fromIterable(List.of(1,1,2))
-  - Flux.create -> personalizao a forma de emitir, dar error e completar o fluxo.
-  - Flux.generate -> similar ao create, mas posso apenas emitir um evento por vez
-  - Flux.puhs -> não é thread safe.
+
+#### Flux - formas de criações
+- Flux.fromStream(passa um stream)
+- Flux.range(inicio, quantidade)
+- Flux.fromIterable(List.of(1,1,2))
+- Flux.create -> personalizao a forma de emitir, dar error e completar o fluxo.
+- Flux.generate -> similar ao create, mas posso apenas emitir um evento por vez
+- Flux.puhs -> não é thread safe.
+- Flux.interval -> gerando dados dia um time.
+- Flux.array -> gera eventos diante um array
+
+#### Flux - formas de combinação
+- mergeWith -> agrupa 2 flux em 1
+- zip -> combinado 2 flux em 1, e neste com dados mesclados ou em tuples
