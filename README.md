@@ -152,7 +152,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
     }
 ```    
 #### switchifempty
-- a diferença do defaul if empty, que este aceita um fallback de eventos e não apenas um valor.
+- a diferença deste como default if empty, que este aceita um fallback de eventos e não apenas um valor.
 ```
     public static void main(String[] args) {
         getOrderNumbers()
