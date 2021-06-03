@@ -131,3 +131,5 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
         return Mono.fromSupplier(() -> Util.faker().random().nextInt(100, 200));
     }
 ```    
+#### timeout
+- Espera o evento diante um time esperado, caso passe, chama um fallback (também configurado)
