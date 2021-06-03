@@ -133,3 +133,21 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 ```    
 #### timeout
 - Espera o evento diante um time esperado, caso passe, chama um fallback (também configurado)
+```
+    public static void main(String[] args) {
+        delay().timeout(Duration.ofSeconds(2), fallback())
+                .subscribe(Util.subscriber());
+        
+        Util.sleepSeconds(60);
+    }
+```
+#### default if empty
+- Emite um evento caso o publisher não tenha eventos, diante a uma condição por exemplo,.
+```
+    public static void main(String[] args) {
+        Flux.range(1,100)
+                .filter(i -> i > 101)
+                .defaultIfEmpty(-100)
+                .subscribe(Util.subscriber());
+    }
+```    
