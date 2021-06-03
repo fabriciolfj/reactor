@@ -151,3 +151,13 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
                 .subscribe(Util.subscriber());
     }
 ```    
+#### switchifempty
+- a diferença do defaul if empty, que este aceita um fallback de eventos e não apenas um valor.
+```
+    public static void main(String[] args) {
+        getOrderNumbers()
+                .filter(i -> i > 12)
+                .switchIfEmpty(fallback())
+                .subscribe(Util.subscriber());
+    }
+```    
