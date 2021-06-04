@@ -194,3 +194,9 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 
 #### next()
 - retorna o primeiro evento apenas no fluxo.
+
+### Cold Publisher
+- precisa que alguem se inscreva no mesmo, para emitir eventos.
+
+### Hot Publisher
+- não necessita de inscritos para emitir eventos.
