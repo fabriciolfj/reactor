@@ -201,3 +201,6 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 
 ### Hot Publisher
 - não necessita de inscritos para emitir eventos.
+
+#### share
+- converte um cold publisher em um hot publisher
