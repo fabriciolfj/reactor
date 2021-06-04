@@ -186,3 +186,6 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
                 .map(p -> new Person());
     }
 ```    
+
+#### flatmap
+- cria um novo fluxo a partir de cada evento upstream (um-para-muitos mapeamentos, pega-se num fluxo upstream, e cria-se um fluxo a partir dele que pode ter múltiplos eventos)
