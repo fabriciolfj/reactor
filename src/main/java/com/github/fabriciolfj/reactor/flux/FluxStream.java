@@ -14,6 +14,7 @@ public class FluxStream {
 
         // para manter o stream aberto, preciso colocar list.stream como: () -> list.stream()
         Flux<Integer> fluxStream = Flux.fromStream(stream);
+        Flux.fromIterable(List.of(1,1,2));
 
         fluxStream.subscribe(
                         Util.onNext(),

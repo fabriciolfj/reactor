@@ -8,11 +8,13 @@ public class FluxCreate {
     //vc personaliza a forma de emitir eventos, erros, complete
     public static void main(String[] args) {
         Flux.create(fluxSink -> {
+            int qtde = 0;
             String country;
             do {
                 country = Util.faker().country().name();
                 fluxSink.next(country);
-            } while(!country.equalsIgnoreCase("canada"));
+                qtde++;
+            } while(!country.equalsIgnoreCase("canada") && qtde < 10);
 
             fluxSink.complete();
         }).subscribe(Util.subscriber());
