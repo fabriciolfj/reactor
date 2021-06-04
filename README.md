@@ -161,3 +161,6 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
                 .subscribe(Util.subscriber());
     }
 ```    
+
+#### transform
+- utiliza-se uma function (java8) para retornar outro evento, exemplo: gostaria de enviar um flux e receber outro flux modificado, posso usar o transform.
