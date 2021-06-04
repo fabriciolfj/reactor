@@ -206,7 +206,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 - converte um cold publisher em um hot publisher
 
 #### publish refCount
-- exige um número de inscritos para iniciar a emissão dos eventos
+- exige um número de inscritos para iniciar a emissão dos eventos, e são enviados apenas para estes.
 
 #### autoConnect()
 - dinife a quantidade de inscritos que receberam os eventos. Exemplo: caso informe 1, e tenha 2 inscritos, aquele que se inscreveu primeiro, receberá os eventos.
