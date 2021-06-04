@@ -197,6 +197,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 
 ### Cold Publisher
 - precisa que alguem se inscreva no mesmo, para emitir eventos.
+- quando um stream inicia sua emissão, o mesmo envia os eventos para todos os inscritos.
 
 ### Hot Publisher
 - não necessita de inscritos para emitir eventos.
