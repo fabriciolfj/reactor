@@ -164,3 +164,25 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 
 #### transform
 - utiliza-se uma function (java8) para retornar outro evento, exemplo: gostaria de enviar um flux e receber outro flux modificado, posso usar o transform.
+
+#### switchOnFirst
+- usa um condicional para desviar o fluxo a uma function, que pode realizar algum processo ou não. (alternativa ao transform)
+```
+    public static void main(String[] args) {
+        getPerson()
+                .switchOnFirst((signal, person) ->
+                    signal.isOnNext() && signal.get().getAge() > 0 ? modify().apply(person) : person)
+                .subscribe(Util.subscriber());
+    }
+
+    private static Function<Flux<Person>, Flux<Person>> modify() {
+        return flux -> flux.filter(p -> p.getAge() > 10)
+                    .doOnNext(p -> p.getName().toUpperCase())
+                    .doOnDiscard(Person.class, d -> System.out.println("discarted : " + d));
+    }
+
+    private static Flux<Person> getPerson() {
+        return Flux.range(1, 30)
+                .map(p -> new Person());
+    }
+```    
