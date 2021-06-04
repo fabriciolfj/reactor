@@ -209,10 +209,31 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 - exige um número de inscritos para iniciar a emissão dos eventos, e são enviados apenas para estes.
 
 #### autoConnect()
-- dinife a quantidade de inscritos que receberam os eventos. Exemplo: caso informe 1, e tenha 2 inscritos, aquele que se inscreveu primeiro, receberá os eventos.
+- define a quantidade de inscritos que receberam os eventos. Exemplo: caso informe 1, e tenha 2 inscritos, aquele que se inscreveu primeiro, receberá os eventos.
 ```
         Flux<String> movieStream = getMovies()
                 .delayElements(Duration.ofSeconds(1))
                 .publish()
                 .autoConnect(2);
 ```             
+#### cache
+- guarda o evento em memória, para os outros inscritos consumirem.
+- No exemplo abaixo, o ultimo evento (no caso 4) é guardado na memória.
+```
+    public static void main(String[] args) {
+        Flux<Object> flux = Flux.create(fluxSink -> {
+            System.out.println("created");
+            for (int i = 0; i < 5; i++) {
+                fluxSink.next(i);
+            }
+            fluxSink.complete();
+        })
+                .cache(1);
+        System.out.println("primeiro");
+        flux.subscribe(System.out::println);
+        System.out.println("segundo");
+        flux.subscribe(System.out::println);
+        System.out.println("terceiro");
+        flux.subscribe(System.out::println);
+    }
+```    
