@@ -205,5 +205,14 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 #### share
 - converte um cold publisher em um hot publisher
 
-### publish refCount
+#### publish refCount
 - exige um número de inscritos para iniciar a emissão dos eventos
+
+#### autoConnect()
+- dinife a quantidade de inscritos que receberam os eventos. Exemplo: caso informe 1, e tenha 2 inscritos, aquele que se inscreveu primeiro, receberá os eventos.
+```
+        Flux<String> movieStream = getMovies()
+                .delayElements(Duration.ofSeconds(1))
+                .publish()
+                .autoConnect(2);
+```             
