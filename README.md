@@ -204,3 +204,6 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 
 #### share
 - converte um cold publisher em um hot publisher
+
+### publish refCount
+- exige um número de inscritos para iniciar a emissão dos eventos
