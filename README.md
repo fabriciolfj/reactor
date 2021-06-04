@@ -59,6 +59,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 
 ### Operadores
 ##### handle
+- utilizado para emitir condicionalmente um sinal.
 - permite manipular o evento, de forma sincrona. Exemplo:
 ```
     public static void main(String[] args) {
@@ -163,6 +164,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 ```    
 
 #### transform
+- utilizado para aplicar operadores dinamicamente.
 - utiliza-se uma function (java8) para retornar outro evento, exemplo: gostaria de enviar um flux e receber outro flux modificado, posso usar o transform.
 
 #### switchOnFirst
@@ -189,3 +191,6 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 
 #### flatmap
 - cria um novo fluxo a partir de cada evento upstream (um-para-muitos mapeamentos, pega-se num fluxo upstream, e cria-se um fluxo a partir dele que pode ter múltiplos eventos)
+
+#### next()
+- retorna o primeiro evento apenas no fluxo.
