@@ -100,6 +100,8 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
     }
 ```  
 
+- Alguns existem apenas no mono, como por exemplo doOnsucess().
+
 ##### limitRate
 - Restringe uma quantidade de eventos, no request dá subscripiton
 - Diferente do take, a inscrição não é cancelada.
