@@ -239,3 +239,13 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
         flux.subscribe(System.out::println);
     }
 ```    
+
+### Schedulers
+- immedieate -> sua a thread corrente
+- single -> utiliza outra thread  (não a principal), para efetuar a operação
+- elastic -> utiliza um pool de threads e reaproveita as mesmas que não estão sendo mais utilizadas
+- parallel -> usa um pool de threads
+
+### Operadores usam scheduling
+- subscribeOn (upstream) -> consome os eventos utilizando outra thread
+- pulishOn (downstream) -> publica os eventos utilizando outra thread
