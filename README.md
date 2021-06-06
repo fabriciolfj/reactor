@@ -59,6 +59,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 
 ### Operadores
 ##### handle
+- utilizado para emitir condicionalmente um sinal.
 - permite manipular o evento, de forma sincrona. Exemplo:
 ```
     public static void main(String[] args) {
@@ -98,6 +99,8 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
                 .subscribe(Util.subscriber());
     }
 ```  
+
+- Alguns existem apenas no mono, como por exemplo doOnsucess().
 
 ##### limitRate
 - Restringe uma quantidade de eventos, no request dá subscripiton
@@ -163,6 +166,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 ```    
 
 #### transform
+- utilizado para aplicar operadores dinamicamente.
 - utiliza-se uma function (java8) para retornar outro evento, exemplo: gostaria de enviar um flux e receber outro flux modificado, posso usar o transform.
 
 #### switchOnFirst
@@ -184,5 +188,54 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
     private static Flux<Person> getPerson() {
         return Flux.range(1, 30)
                 .map(p -> new Person());
+    }
+```    
+
+#### flatmap
+- cria um novo fluxo a partir de cada evento upstream (um-para-muitos mapeamentos, pega-se num fluxo upstream, e cria-se um fluxo a partir dele que pode ter múltiplos eventos)
+
+#### next()
+- retorna o primeiro evento apenas no fluxo.
+
+### Cold Publisher
+- precisa que alguem se inscreva no mesmo, para emitir eventos.
+- quando um stream inicia sua emissão, o mesmo envia os eventos para todos os inscritos.
+
+### Hot Publisher
+- não necessita de inscritos para emitir eventos.
+
+#### share
+- converte um cold publisher em um hot publisher
+
+#### publish refCount
+- exige um número de inscritos para iniciar a emissão dos eventos, e são enviados apenas para estes.
+
+#### autoConnect()
+- define a quantidade de inscritos que receberam os eventos. Exemplo: caso informe 1, e tenha 2 inscritos, aquele que se inscreveu primeiro, receberá os eventos.
+```
+        Flux<String> movieStream = getMovies()
+                .delayElements(Duration.ofSeconds(1))
+                .publish()
+                .autoConnect(2);
+```             
+#### cache
+- guarda o evento em memória, para os outros inscritos consumirem.
+- No exemplo abaixo, o ultimo evento (no caso 4) é guardado na memória.
+```
+    public static void main(String[] args) {
+        Flux<Object> flux = Flux.create(fluxSink -> {
+            System.out.println("created");
+            for (int i = 0; i < 5; i++) {
+                fluxSink.next(i);
+            }
+            fluxSink.complete();
+        })
+                .cache(1);
+        System.out.println("primeiro");
+        flux.subscribe(System.out::println);
+        System.out.println("segundo");
+        flux.subscribe(System.out::println);
+        System.out.println("terceiro");
+        flux.subscribe(System.out::println);
     }
 ```    
