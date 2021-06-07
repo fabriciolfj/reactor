@@ -197,6 +197,12 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 #### next()
 - retorna o primeiro evento apenas no fluxo.
 
+### doOnNext()
+- Este operador por ser declarado várias vezes em vários momentos, por exemplo:
+  - Apos o flux.create:  vai emitir o evento antes do onNext declaro anterior ao subscriber (caso aja).
+  - antes do subscribe: vai emitir um evento antes do inscrito receber o mesmo.
+- O comportamento segue a questão da procedencia, ou seja, se declaro na criação do evento, esse será emitido antes do onNext definido na inscrição.  
+
 ### Cold Publisher
 - precisa que alguem se inscreva no mesmo, para emitir eventos.
 - quando um stream inicia sua emissão, o mesmo envia os eventos para todos os inscritos.
@@ -211,7 +217,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 - exige um número de inscritos para iniciar a emissão dos eventos, e são enviados apenas para estes.
 
 #### autoConnect()
-- define a quantidade de inscritos que receberam os eventos. Exemplo: caso informe 1, e tenha 2 inscritos, aquele que se inscreveu primeiro, receberá os eventos.
+- define a quantidade de inscritos que receberam os eventos. Exemplo: caso informe 1, e tenha 2 inscritos, ambos receberam os eventos (primeiro se inscreve, o segundo ao se inscriver ele é reconectado aos eventos, por isso recebe também).
 ```
         Flux<String> movieStream = getMovies()
                 .delayElements(Duration.ofSeconds(1))
@@ -239,3 +245,39 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
         flux.subscribe(System.out::println);
     }
 ```    
+
+### Schedulers
+- immedieate -> sua a thread corrente
+- single -> utiliza outra thread  (não a principal), para efetuar a operação
+- boundedElastic -> utiliza um pool de threads e reaproveita as mesmas que não estão sendo mais utilizadas (indicado caso queria realizar um block no fluxo)
+- parallel -> usa um pool de threads
+
+### Operadores usam scheduling
+- subscribeOn (upstream) -> consome os eventos utilizando outra thread
+- publishOn (downstream) -> publica os eventos utilizando outra thread
+
+#### Combinando subscribeOn e publisherOn
+- Quando combina-se o subscribeOn e publishOn, os eventos são criados no pool vinculado ao subscribeOn e consumidos no pool do puslisheOn
+
+#### Parallel-execution
+- Executa a operação de forma paralela (outra estratégia de processamento assíncrono), dividindo em diversas threads.
+
+#### Diferença entre parallel-execution com operadores utilizando scheduling
+- parallel -> quebra o processamento em diversas threads, mesmo com 1 inscrito no fluxo.
+- operadores -> cada inscrito é executado em uma thread diferente.
+
+#### Observação importante
+- caso vincule subscribeOn a um flux.create, por exemplo, todo o processo  (map no caso abaixo) é executado no pool vinculado a este e não no pool vinculado ao inscrito.
+```
+        Flux<Object> flux = Flux.create(fluxSink -> {
+            for (int i = 0; i < 5; i++) {
+                fluxSink.next(i);
+            }
+            fluxSink.complete();
+        })
+        .subscribeOn(Schedulers.boundedElastic());
+        
+        flux.subscribeOn(Schedulers.parallel())
+            .map(i -> i + "a") -> é exeutado boundedElastic, ou seja, o primeiro subscribeOn que prevalece
+            .subscribe(Util.subscriber()); -> é exeutado boundedElastic
+```
