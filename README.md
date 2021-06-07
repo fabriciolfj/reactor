@@ -258,3 +258,10 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 
 #### Combinando subscribeOn e publisherOn
 - Quando combina-se o subscribeOn e publishOn, os eventos são criados no pool vinculado ao subscribeOn e consumidos no pool do puslisheOn
+
+#### Parallel-execution
+- Executa a operação de forma paralela (outra estratégia de processamento assíncrono), dividindo em diversas threads.
+
+#### Diferença entre parallel-execution com operadores utilizando scheduling
+- parallel -> quebra o processamento em diversas threads, mesmo com 1 inscrito no fluxo.
+- operadores -> cada inscrito é executado em uma thread diferente.
