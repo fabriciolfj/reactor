@@ -297,4 +297,12 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 
 #### error
 - quando a fila encher, emite um error.
-#### error
+
+### Batching
+- Quando se possui muitos eventos e queira quebra-los em lotes, utilizando o batching e este nos fornece 3 estratégias demonstradas abaixo:
+
+#### buffer
+
+#### window
+
+#### grouping
