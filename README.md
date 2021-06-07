@@ -281,3 +281,20 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
             .map(i -> i + "a") -> é exeutado boundedElastic, ou seja, o primeiro subscribeOn que prevalece
             .subscribe(Util.subscriber()); -> é exeutado boundedElastic
 ```
+
+### Backpressure
+- Estratégia para linmitar a quantidade de eventos que o inscrito recebe, afim de não sobrecarrega-lo.
+- Deve ser declarado antes do publishOn
+
+#### Buffer
+- limita o volume de dados a serem consumidos em memoria.
+
+#### Drop
+- cria uma fila, e enquanto esta estiver cheia, os novos itens são descartadas (usa a propriedade System.setProperty("reactor.bufferSize.small", "16"))
+
+#### latest
+- quandoa fila estiver cheia, mantém apenas o ultimo item, quando o próximo chegar, este é descardado.
+
+#### error
+- quando a fila encher, emite um error.
+#### error
