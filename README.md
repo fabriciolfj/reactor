@@ -287,7 +287,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 - Deve ser declarado antes do publishOn
 
 #### Buffer
-- guarda em memória um volume de dados e estes são consumidos
+- limita o volume de dados a serem consumidos em memoria.
 
 #### Drop
 - cria uma fila, e enquanto esta estiver cheia, os novos itens são descartadas (usa a propriedade System.setProperty("reactor.bufferSize.small", "16"))
