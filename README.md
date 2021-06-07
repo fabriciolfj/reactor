@@ -197,6 +197,12 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 #### next()
 - retorna o primeiro evento apenas no fluxo.
 
+### doOnNext()
+- Este operador por ser declarado várias vezes em vários momentos, por exemplo:
+  - Apos o flux.create:  vai emitir o evento antes do onNext declaro anterior ao subscriber (caso aja).
+  - antes do subscribe: vai emitir um evento antes do inscrito receber o mesmo.
+- O comportamento segue a questão da procedencia, ou seja, se declaro na criação do evento, esse será emitido antes do onNext definido na inscrição.  
+
 ### Cold Publisher
 - precisa que alguem se inscreva no mesmo, para emitir eventos.
 - quando um stream inicia sua emissão, o mesmo envia os eventos para todos os inscritos.
@@ -243,7 +249,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 ### Schedulers
 - immedieate -> sua a thread corrente
 - single -> utiliza outra thread  (não a principal), para efetuar a operação
-- elastic -> utiliza um pool de threads e reaproveita as mesmas que não estão sendo mais utilizadas
+- boundedElastic -> utiliza um pool de threads e reaproveita as mesmas que não estão sendo mais utilizadas
 - parallel -> usa um pool de threads
 
 ### Operadores usam scheduling
