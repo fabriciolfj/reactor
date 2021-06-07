@@ -290,7 +290,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 - guarda em memória um volume de dados e estes são consumidos
 
 #### Drop
-- cria uma fila, e enquanto esta estiver cheia, os novos itens são descartadas
+- cria uma fila, e enquanto esta estiver cheia, os novos itens são descartadas (usa a propriedade System.setProperty("reactor.bufferSize.small", "16"))
 
 #### latest
 - quandoa fila estiver cheia, mantém apenas o ultimo item, quando o próximo chegar, este é descardado.
