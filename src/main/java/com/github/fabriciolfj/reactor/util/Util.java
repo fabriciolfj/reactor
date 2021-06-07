@@ -30,6 +30,15 @@ public class Util {
         ;
     }
 
+    public static void sleepMillins(int millins) {
+        try {
+            Thread.sleep(millins);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ;
+    }
+
     public static Faker faker() {
         return FAKER;
     }
