@@ -211,7 +211,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 - exige um número de inscritos para iniciar a emissão dos eventos, e são enviados apenas para estes.
 
 #### autoConnect()
-- define a quantidade de inscritos que receberam os eventos. Exemplo: caso informe 1, e tenha 2 inscritos, aquele que se inscreveu primeiro, receberá os eventos.
+- define a quantidade de inscritos que receberam os eventos. Exemplo: caso informe 1, e tenha 2 inscritos, ambos receberam os eventos (primeiro se inscreve, o segundo ao se inscriver ele é reconectado aos eventos, por isso recebe também).
 ```
         Flux<String> movieStream = getMovies()
                 .delayElements(Duration.ofSeconds(1))
