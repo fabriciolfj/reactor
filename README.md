@@ -265,3 +265,20 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 #### Diferença entre parallel-execution com operadores utilizando scheduling
 - parallel -> quebra o processamento em diversas threads, mesmo com 1 inscrito no fluxo.
 - operadores -> cada inscrito é executado em uma thread diferente.
+
+#### Observação importante
+- caso vincule subscribeOn a um flux.create, por exemplo, todo o processo  (map no caso abaixo) é executado no pool vinculado a este e não no pool vinculado ao inscrito.
+```
+        Flux<Object> flux = Flux.create(fluxSink -> {
+            for (int i = 0; i < 5; i++) {
+                fluxSink.next(i);
+            }
+            fluxSink.complete();
+        })
+        .subscribeOn(Schedulers.boundedElastic());
+        
+        flux.subscribeOn(Schedulers.parallel())
+            .map(i -> i + "a") -> é exeutado boundedElastic 
+            .subscribe(Util.subscriber());
+```            
+```
