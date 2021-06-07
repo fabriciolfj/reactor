@@ -254,4 +254,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 
 ### Operadores usam scheduling
 - subscribeOn (upstream) -> consome os eventos utilizando outra thread
-- pulishOn (downstream) -> publica os eventos utilizando outra thread
+- publishOn (downstream) -> publica os eventos utilizando outra thread
+
+#### Combinando subscribeOn e publisherOn
+- Quando combina-se o subscribeOn e publishOn, os eventos são criados no pool vinculado ao subscribeOn e consumidos no pool do puslisheOn
