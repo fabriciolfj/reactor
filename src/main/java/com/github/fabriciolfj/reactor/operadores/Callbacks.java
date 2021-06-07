@@ -15,7 +15,7 @@ public class Callbacks {
             System.out.println("complete");
         }).doOnComplete(() -> System.out.println("doOnComplete")) //chama no fim do fluxo, seja concluido pelo consumo ou cancelada a inscrição
                 .doFirst(() -> System.out.println("doFirst 1")) //primeiro evento
-                .doOnNext(o -> System.out.println("doOnNext: " + o)) //retorna a cada evento
+                .doOnNext(o -> System.out.println("doOnNext: " + o)) //retorna a cada evento, ou a cada evento dentro do create, dependi a onde foi declarado
                 .doOnSubscribe(s -> System.out.println("doOnSubscribe " + s)) //momento da inscrição no publisher
                 .doOnError(err -> System.out.println("doOnError: " + err.getMessage()))
                 .doOnTerminate(() -> System.out.println("doOnTerminate")) // chama apos o fim do complete
