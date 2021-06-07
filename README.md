@@ -284,6 +284,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 
 ### Backpressure
 - Estratégia para linmitar a quantidade de eventos que o inscrito recebe, afim de não sobrecarrega-lo.
+- Deve ser declarado antes do publishOn
 
 #### Buffer
 - guarda em memória um volume de dados e estes são consumidos
