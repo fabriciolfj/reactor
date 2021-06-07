@@ -249,7 +249,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 ### Schedulers
 - immedieate -> sua a thread corrente
 - single -> utiliza outra thread  (não a principal), para efetuar a operação
-- boundedElastic -> utiliza um pool de threads e reaproveita as mesmas que não estão sendo mais utilizadas
+- boundedElastic -> utiliza um pool de threads e reaproveita as mesmas que não estão sendo mais utilizadas (indicado caso queria realizar um block no fluxo)
 - parallel -> usa um pool de threads
 
 ### Operadores usam scheduling
