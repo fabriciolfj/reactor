@@ -331,7 +331,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 ```
 
 #### grouping
-- Mediante um predicate (uma função que retorna um booleano),  divide o fluxo em 2 subfluxos, e estes possuem uma chava, simular ao hasmap.
+- Mediante um predicate (uma função que retorna um booleano),  divide o fluxo em 2 subfluxos, e estes possuem uma chave, simular ao hasmap.
 ```
     public static void main(String[] args) {
         Flux.range(1, 10)
