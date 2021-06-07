@@ -278,7 +278,6 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
         .subscribeOn(Schedulers.boundedElastic());
         
         flux.subscribeOn(Schedulers.parallel())
-            .map(i -> i + "a") -> é exeutado boundedElastic 
-            .subscribe(Util.subscriber());
-```            
+            .map(i -> i + "a") -> é exeutado boundedElastic, ou seja, o primeiro subscribeOn que prevalece
+            .subscribe(Util.subscriber()); -> é exeutado boundedElastic
 ```
