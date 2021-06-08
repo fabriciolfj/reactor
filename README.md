@@ -354,6 +354,9 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
                 .subscribe(Util.subscriber());
     }
 ```    
+### Repeat e Retry
+- repeat -> repete a emissão do evento mediante configuração
+- retry -> tenta consumir o evento novamente, diante a uma falha
 
 ### SINK
 - é um processador
