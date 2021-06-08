@@ -480,3 +480,24 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 
     }
 ```
+
+## CONTEXTS
+- imutavel
+- ao inserir algum dado no contexto, o mesmo fica acessivel na app como um todo
+
+```
+    public static void main(String[] args) {
+        getWelcome().contextWrite(Context.of("user", "fabricio"))
+                .subscribe(Util.subscriber());
+    }
+
+    private static Mono<String> getWelcome() {
+        return Mono.deferContextual(ctx -> {
+            if(ctx.hasKey("user")) {
+                return Mono.just("Welcome " + ctx.get("user"));
+            }
+
+            return Mono.error(new RuntimeException("unauthenticated"));
+        });
+    }
+```    
