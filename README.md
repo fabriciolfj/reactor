@@ -343,3 +343,14 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
         value.subscribe(p -> System.out.println(p + " key: " + key));
     }
 ```    
+
+### THEN
+- caso queira emitir um outro evento após o flux.
+```
+    public static void main(String[] args) {
+        Flux.just(1, 10)
+                .doOnNext(i -> System.out.println(i))
+                .then(Mono.just("teste"))
+                .subscribe(Util.subscriber());
+    }
+```    
