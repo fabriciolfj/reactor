@@ -343,3 +343,161 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
         value.subscribe(p -> System.out.println(p + " key: " + key));
     }
 ```    
+
+### THEN
+- caso queira emitir um outro evento após o flux.
+```
+    public static void main(String[] args) {
+        Flux.just(1, 10)
+                .doOnNext(i -> System.out.println(i))
+                .then(Mono.just("teste"))
+                .subscribe(Util.subscriber());
+    }
+```    
+### Repeat e Retry
+- repeat -> repete a emissão do evento mediante configuração
+
+```
+    public static void main(String[] args) {
+        random()
+                .repeat(2).subscribe(Util.subscriber());
+    }
+
+    private static Flux<Integer> random() {
+        return Flux.range(5, 5)
+                .doOnComplete(() -> System.out.println("Completed"));
+    }
+```
+- retry -> tenta consumir o evento novamente, diante a uma falha
+```
+    public static void main(String[] args) {
+        random().retryWhen(
+                //Retry.fixedDelay(2, Duration.ofSeconds(2))
+                Retry.max(2)
+        )
+                .subscribe(Util.subscriber());
+    }
+
+    private static Flux<Integer> random() {
+        return Flux.range(5, 10)
+                .map(i -> {
+                    var valor = Util.faker().random().nextInt(10);
+                    System.out.println("Random: " + valor);
+                    return i / valor;
+                })
+                .doOnSubscribe(s -> System.out.println("subscribe"))
+                .doOnComplete(() -> System.out.println("--completed"))
+                .doOnNext(value -> System.out.println("Next: " + value))
+                .doOnError(value -> System.out.println("Error: " + value));
+    }
+```    
+
+### SINK
+- é um processador
+- emite eventos (ou sinais) manualmente ou programaticamente
+- Exemplo de uso no caso do create ou generated do flux.
+
+### Sink one
+- emite um mono, empty ou error.
+- monto a emissão do evento de forma programática.
+- pode possuir vários inscritos
+```
+    public static void main(String[] args) {
+        var sink = Sinks.one();
+        var mono = sink.asMono();
+
+        sink.tryEmitValue("ola");
+        mono.subscribe(Util.subscriber());
+    }
+```    
+
+### Sink unicast
+- Emite um ou vários eventos
+- pode possuir apenas 1 inscrito
+```
+    public static void main(String[] args) {
+        var sink = Sinks.many().unicast().onBackpressureBuffer();
+
+        var flux = sink.asFlux();
+
+        flux.subscribe(Util.subscriber());
+
+        sink.tryEmitNext(1);
+        sink.tryEmitNext(2);
+        sink.tryEmitNext(3);
+
+        //vai dar erro, pois permite apenas 1 inscrito
+        flux.subscribe(Util.subscriber());
+
+    }
+```    
+
+### Sink multicast
+- Emite um ou vários eventos
+- pode possuir vários inscritos
+- Os inscritos após a emissão, não receberá os eventos
+```
+    public static void main(String[] args) {
+        //buffer
+        //var sink = Sinks.many().multicast().onBackpressureBuffer();
+        //no history
+        var sink = Sinks.many().multicast().directAllOrNothing();
+
+        var flux = sink.asFlux();
+
+        flux.subscribe(Util.subscriber("ONE"));
+        flux.subscribe(Util.subscriber("TWO"));
+
+        sink.tryEmitNext(1);
+        sink.tryEmitNext(2);
+        sink.tryEmitNext(3);
+
+        //não vai receber, pois se inscreveu após a emissão
+        flux.subscribe(Util.subscriber("THREE"));
+
+    }
+```    
+
+### Sink replay
+- Emite um ou vários eventos
+- pode possuir vários inscritos
+- Os inscritos após a emissão, receberão os eventos
+```
+    public static void main(String[] args) {
+        var sink = Sinks.many().replay().all(2);
+
+        var flux = sink.asFlux();
+
+        flux.subscribe(Util.subscriber("ONE"));
+        flux.subscribe(Util.subscriber("TWO"));
+
+        sink.tryEmitNext(1);
+        sink.tryEmitNext(2);
+        sink.tryEmitNext(3);
+
+        //vai receber os eventos, mesmo após a emissão
+        flux.subscribe(Util.subscriber("THREE"));
+
+    }
+```
+
+## CONTEXTS
+- imutável
+- ao inserir algum dado no contexto, o mesmo fica acessivel na app como um todo
+
+```
+    public static void main(String[] args) {
+        getWelcome().contextWrite(Context.of("user", "fabricio"))
+                .subscribe(Util.subscriber());
+    }
+
+    private static Mono<String> getWelcome() {
+        return Mono.deferContextual(ctx -> {
+            if(ctx.hasKey("user")) {
+                return Mono.just("Welcome " + ctx.get("user"));
+            }
+
+            return Mono.error(new RuntimeException("unauthenticated"));
+        });
+    }
+```    
