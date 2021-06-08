@@ -395,3 +395,4 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 ### SINK
 - é um processador
 - emite eventos (ou sinais) manualmente ou programaticamente
+- Exemplo de uso no caso do create ou generated do flux.
