@@ -400,6 +400,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 ### Sink one
 - emite um mono, empty ou error.
 - monto a emissão do evento de forma programática.
+- pode possuir vários inscritos
 ```
     public static void main(String[] args) {
         var sink = Sinks.one();
@@ -409,3 +410,15 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
         mono.subscribe(Util.subscriber());
     }
 ```    
+
+### Sink unicast
+- Emite um ou vários eventos
+- pode possuir apenas 1 inscrito
+
+### Sink multicast
+- Emite um ou vários eventos
+- pode possuir vários inscritos
+
+### Sink replay
+- Emite um ou vários eventos
+- pode possuir vários inscritos e repetir algum deles.
