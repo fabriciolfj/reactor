@@ -435,7 +435,48 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 ### Sink multicast
 - Emite um ou vários eventos
 - pode possuir vários inscritos
+- Os inscritos após a emissão, não receberá os eventos
+```
+    public static void main(String[] args) {
+        //buffer
+        //var sink = Sinks.many().multicast().onBackpressureBuffer();
+        //no history
+        var sink = Sinks.many().multicast().directAllOrNothing();
+
+        var flux = sink.asFlux();
+
+        flux.subscribe(Util.subscriber("ONE"));
+        flux.subscribe(Util.subscriber("TWO"));
+
+        sink.tryEmitNext(1);
+        sink.tryEmitNext(2);
+        sink.tryEmitNext(3);
+
+        //não vai receber, pois se inscreveu após a emissão
+        flux.subscribe(Util.subscriber("THREE"));
+
+    }
+```    
 
 ### Sink replay
 - Emite um ou vários eventos
-- pode possuir vários inscritos e repetir algum deles.
+- pode possuir vários inscritos
+- Os inscritos após a emissão, receberão os eventos
+```
+    public static void main(String[] args) {
+        var sink = Sinks.many().replay().all(2);
+
+        var flux = sink.asFlux();
+
+        flux.subscribe(Util.subscriber("ONE"));
+        flux.subscribe(Util.subscriber("TWO"));
+
+        sink.tryEmitNext(1);
+        sink.tryEmitNext(2);
+        sink.tryEmitNext(3);
+
+        //vai receber os eventos, mesmo após a emissão
+        flux.subscribe(Util.subscriber("THREE"));
+
+    }
+```
