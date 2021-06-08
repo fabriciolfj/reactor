@@ -354,3 +354,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
                 .subscribe(Util.subscriber());
     }
 ```    
+
+### SINK
+- é um processador
+- emite eventos (ou sinais) manualmente ou programaticamente
