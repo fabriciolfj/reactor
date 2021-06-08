@@ -414,6 +414,23 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 ### Sink unicast
 - Emite um ou vários eventos
 - pode possuir apenas 1 inscrito
+```
+    public static void main(String[] args) {
+        var sink = Sinks.many().unicast().onBackpressureBuffer();
+
+        var flux = sink.asFlux();
+
+        flux.subscribe(Util.subscriber());
+
+        sink.tryEmitNext(1);
+        sink.tryEmitNext(2);
+        sink.tryEmitNext(3);
+
+        //vai dar erro, pois permite apenas 1 inscrito
+        flux.subscribe(Util.subscriber());
+
+    }
+```    
 
 ### Sink multicast
 - Emite um ou vários eventos
