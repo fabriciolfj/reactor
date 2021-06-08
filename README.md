@@ -482,7 +482,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 ```
 
 ## CONTEXTS
-- imutavel
+- imutável
 - ao inserir algum dado no contexto, o mesmo fica acessivel na app como um todo
 
 ```
