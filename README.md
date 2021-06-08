@@ -297,4 +297,49 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 
 #### error
 - quando a fila encher, emite um error.
-#### error
+
+### Batching
+- Quando se possui muitos eventos e queira quebra-los em lotes, utilizando o batching e este nos fornece 3 estratégias demonstradas abaixo:
+
+#### buffer
+- Armazena em memoria o uma quantidade armazenada, que será emitida
+```
+
+    public static void main(String[] args) {
+        Flux.range(1, 10)
+                .buffer(2)
+                .subscribe(Util.subscriber());
+    }
+```
+
+#### window
+- Quebra em subfluxos, na quantidade configurada
+```
+    public static void main(String[] args) {
+        Flux.range(1, 10)
+                .window(2)
+                .flatMap(e -> save(e))
+                .subscribe(Util.subscriber());
+    }
+
+    private static Flux<Integer> save(Flux<Integer> flux) {
+        return flux.doOnNext(e-> System.out.println("saving " + e))
+                .doOnComplete(() -> {
+                    System.out.println("saved this batch");
+                });
+    }
+```
+
+#### grouping
+- Mediante um predicate (uma função que retorna um booleano),  divide o fluxo em 2 subfluxos, e estes possuem uma chave, simular ao hasmap.
+```
+    public static void main(String[] args) {
+        Flux.range(1, 10)
+                .groupBy(p -> p % 2)
+                .subscribe(value -> print(value, value.key()));
+    }
+
+    private static void print(GroupedFlux<Integer, Integer> value, Integer key) {
+        value.subscribe(p -> System.out.println(p + " key: " + key));
+    }
+```    
