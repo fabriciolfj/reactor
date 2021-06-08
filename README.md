@@ -396,3 +396,16 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 - é um processador
 - emite eventos (ou sinais) manualmente ou programaticamente
 - Exemplo de uso no caso do create ou generated do flux.
+
+### Sink one
+- emite um mono, empty ou error.
+- monto a emissão do evento de forma programática.
+```
+    public static void main(String[] args) {
+        var sink = Sinks.one();
+        var mono = sink.asMono();
+
+        sink.tryEmitValue("ola");
+        mono.subscribe(Util.subscriber());
+    }
+```    
