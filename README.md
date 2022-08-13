@@ -35,7 +35,7 @@ subscrive -> subscription -> publisher
   - Mono.fromCallable -> usa um fornecedor para emitir um evento ou lança uma exceção caso não consiga.
    
 #### Mono async
-- Uma forma de se subscrever em um evento, utiliza-se:
+- Uma forma de se subscrever em um evento com outra thread, utiliza-se:
 ```
 subscribeOn(Schedulers.boundedElastic()).subscribe()
 ```
@@ -49,8 +49,8 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 - Flux.fromIterable(List.of(1,1,2))
 - Flux.create -> personalizao a forma de emitir, dar error e completar o fluxo.
 - Flux.generate -> similar ao create, mas posso apenas emitir um evento por vez
-- Flux.puhs -> não é thread safe.
-- Flux.interval -> gerando dados dia um time.
+- Flux.push -> não é thread safe.
+- Flux.interval -> gerando dados diante de um time.
 - Flux.array -> gera eventos diante um array
 
 #### Flux - formas de combinação
@@ -170,7 +170,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 - utiliza-se uma function (java8) para retornar outro evento, exemplo: gostaria de enviar um flux e receber outro flux modificado, posso usar o transform.
 
 #### switchOnFirst
-- usa um condicional para desviar o fluxo a uma function, que pode realizar algum processo ou não. (alternativa ao transform)
+- usa uma condicional para desviar o fluxo a uma function, que pode realizar algum processo ou não. (alternativa ao transform)
 ```
     public static void main(String[] args) {
         getPerson()
@@ -293,7 +293,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 - cria uma fila, e enquanto esta estiver cheia, os novos itens são descartadas (usa a propriedade System.setProperty("reactor.bufferSize.small", "16"))
 
 #### latest
-- quandoa fila estiver cheia, mantém apenas o ultimo item, quando o próximo chegar, este é descardado.
+- quando fila estiver cheia, mantém apenas o ultimo item, quando o próximo chegar, este é descardado.
 
 #### error
 - quando a fila encher, emite um error.
@@ -331,7 +331,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 ```
 
 #### grouping
-- Mediante um predicate (uma função que retorna um booleano),  divide o fluxo em 2 subfluxos, e estes possuem uma chave, simular ao hasmap.
+- Dante um predicate (uma função que retorna um booleano),  divide o fluxo em 2 subfluxos, e estes possuem uma chave, simular ao HashMap.
 ```
     public static void main(String[] args) {
         Flux.range(1, 10)
@@ -399,7 +399,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 
 ### Sink one
 - emite um mono, empty ou error.
-- monto a emissão do evento de forma programática.
+- cria-se a emissão do evento de forma programática.
 - pode possuir vários inscritos
 ```
     public static void main(String[] args) {
@@ -435,7 +435,7 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 ### Sink multicast
 - Emite um ou vários eventos
 - pode possuir vários inscritos
-- Os inscritos após a emissão, não receberá os eventos
+- Os inscritos após a emissão, não receberam os eventos
 ```
     public static void main(String[] args) {
         //buffer
