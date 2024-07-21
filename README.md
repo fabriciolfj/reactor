@@ -258,6 +258,20 @@ subscribeOn(Schedulers.boundedElastic()).subscribe()
 
 #### Combinando subscribeOn e publisherOn
 - Quando combina-se o subscribeOn e publishOn, os eventos são criados no pool vinculado ao subscribeOn e consumidos no pool do puslisheOn
+- pulishOn altera o contexto de threads na pubilicação, ideal caso necessite de um block em algum evento e emitir eventos em seguida.
+
+```
+public Mono<Boolean> workableBlockingSearch(String fileName, String searchTerm) {
+    return Mono.just("")
+      .doOnNext(s -> ThreadLogger.log("1. WorkableBlockingSearch"))
+      .publishOn(Schedulers.boundedElastic())
+      .doOnNext(s -> ThreadLogger.log("2. WorkableBlockingSearch"))
+      .map(s -> fileService.getFileContentAsString(fileName)
+        .block()
+        .contains(searchTerm))
+      .doOnNext(s -> ThreadLogger.log("3. WorkableBlockingSearch"));
+}
+```
 
 #### Parallel-execution
 - Executa a operação de forma paralela (outra estratégia de processamento assíncrono), dividindo em diversas threads.
